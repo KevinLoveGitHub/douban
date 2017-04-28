@@ -6,7 +6,20 @@ from douban.movie import Movie
 
 class DoubanMovieSpider(scrapy.Spider):
     name = "doubanMovie"
+
     allowed_domains = ["douban.com"]
+
+    # 自定义设置请求头信息
+    custom_settings = {
+        'DEFAULT_REQUEST_HEADERS': {
+            'Accept': 'text/event-stream',
+            'Accept-Language': 'zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4,zh-HK;q=0.2',
+        },
+        'USER_AGENT':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/537.36 (KHTML, like Gecko) '
+            'Chrome/57.0.2987.133 Safari/537.36 '
+    }
+
     start_urls = [
         'https://movie.douban.com/top250',
     ]
