@@ -13,5 +13,7 @@ from douban.items import Item
 
 class Movie(Item):
     info = scrapy.Field()
-    direct = scrapy.Field()
-    star = scrapy.Field()
+    director = scrapy.Field()
+    country = scrapy.Field()
+    type = scrapy.Field()
+    year = scrapy.Field()
