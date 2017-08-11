@@ -8,7 +8,9 @@
 
 import pymysql
 import logging
-logging.basicConfig(level=logging.ERROR)
+import leancloud
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 def dbHandle():
@@ -24,7 +26,8 @@ def dbHandle():
 
 
 class DoubanPipeline(object):
-    def process_item(self, item, spider):
+    @staticmethod
+    def process_item(item, spider):
         db = dbHandle()
         cursor = db.cursor()
         sql = 'INSERT INTO movie (title, info, director, pic, link, score, commentsNum, country, type, year)' \
@@ -39,3 +42,22 @@ class DoubanPipeline(object):
             db.rollback()
 
         return item
+
+
+class LeanCloudPipeline(object):
+    @staticmethod
+    def process_item(item, spider):
+        leancloud.init("JBCyid797qS5I6OfT45DP1zM-gzGzoHsz", "q3wI59KSKaPcdnTtebtuJnog")
+        movie = leancloud.Object.extend('Movie')
+        test_object = movie()
+        test_object.set('title', item['title'])
+        test_object.set('info', item['info'])
+        test_object.set('director', item['director'])
+        test_object.set('pic', item['pic'])
+        test_object.set('link', item['link'])
+        test_object.set('score', item['score'])
+        test_object.set('commentsNum', item['commentsNum'])
+        test_object.set('country', item['country'])
+        test_object.set('type', item['type'])
+        test_object.set('year', item['year'])
+        test_object.save()

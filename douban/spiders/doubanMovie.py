@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import scrapy
-import re
 from douban.movie import Movie
 
 
@@ -21,7 +20,8 @@ class DoubanMovieSpider(scrapy.Spider):
             'Chrome/57.0.2987.133 Safari/537.36 ',
 
         'ITEM_PIPELINES': {
-            'douban.pipelines.DoubanPipeline': 300
+            'douban.pipelines.DoubanPipeline': 300,
+            'douban.pipelines.LeanCloudPipeline': 300
         }
     }
 
